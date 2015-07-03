@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Developer extends Model
 {
-    protected $fillable = ['firstName', 'middleName', 'lastName', 'gitHubHandle'];
+    protected $fillable = ['firstName', 'middleName', 'lastName', 'gitHubHandle', 'developer_type_id'];
 
     public function developerType()
     {

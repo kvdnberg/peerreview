@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('developers', array('as' => 'developers', 'uses' =>'DevelopersController@index'));
+Route::get('developers/{sortby?}/{order?}', array('as' => 'developers', 'uses' =>'DevelopersController@index'));
 Route::get('developers/add', array('as' => 'developers_add', 'uses' => 'DevelopersController@create'));
+Route::get('developers/edit/{id}', array('as' => 'developers_edit', 'uses' => 'DevelopersController@edit'));
 Route::post('developers', 'DevelopersController@store');

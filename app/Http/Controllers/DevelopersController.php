@@ -15,11 +15,16 @@ class DevelopersController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($sortby = null, $order = null)
     {
-        $developers = Developer::all();
 
-        return view('PeerReview.Developers.index', compact('developers'));
+        if ($sortby && $order) {
+            $developers = Developer::orderBy($sortby, $order)->get();
+        } else {
+            $developers = Developer::all();
+        }
+
+        return view('PeerReview.Developers.index', compact('developers', 'sortby', 'order'));
     }
 
     /**
@@ -29,7 +34,7 @@ class DevelopersController extends Controller
      */
     public function create()
     {
-        $types = DeveloperType::all();
+        $types = DeveloperType::lists('type', 'id');
         return view('PeerReview.Developers.add', compact('types'));
     }
 
@@ -43,7 +48,7 @@ class DevelopersController extends Controller
         $input = Request::all();
         Developer::create($input);
 
-        return $input;
+        return redirect('developers');
     }
 
     /**
@@ -65,7 +70,9 @@ class DevelopersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $types = DeveloperType::lists('type', 'id');
+        $developer = Developer::find($id);
+        return view('PeerReview.Developers.edit', compact('types', 'developer'));
     }
 
     /**
@@ -76,7 +83,10 @@ class DevelopersController extends Controller
      */
     public function update($id)
     {
-        //
+        $input = Request::all();
+        Developer::update($input);
+
+        return redirect('developers');
     }
 
     /**

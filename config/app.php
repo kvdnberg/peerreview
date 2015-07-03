@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://local.peerreview.netwerven.nl',
+    'url' => 'http://peerreview.netwerven.nl',
 
     /*
     |--------------------------------------------------------------------------
