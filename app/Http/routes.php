@@ -15,4 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('developers', 'DevelopersController@index');
+Route::get('developers', array('as' => 'developers', 'uses' =>'DevelopersController@index'));
+Route::get('developers/add', array('as' => 'developers_add', 'uses' => 'DevelopersController@create'));
+Route::post('developers', 'DevelopersController@store');

@@ -10,7 +10,7 @@ class Developer extends Model
 
     public function developerType()
     {
-        return $this->hasOne('PeerReview\DeveloperType');
+        return $this->belongsTo('PeerReview\DeveloperType');
     }
 
     public function getFullNameAttribute()

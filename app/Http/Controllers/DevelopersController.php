@@ -2,11 +2,11 @@
 
 namespace PeerReview\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use PeerReview\Developer;
+use PeerReview\DeveloperType;
 use PeerReview\Http\Requests;
 use PeerReview\Http\Controllers\Controller;
+use Request;
 
 class DevelopersController extends Controller
 {
@@ -18,6 +18,8 @@ class DevelopersController extends Controller
     public function index()
     {
         $developers = Developer::all();
+
+        return view('PeerReview.Developers.index', compact('developers'));
     }
 
     /**
@@ -27,7 +29,8 @@ class DevelopersController extends Controller
      */
     public function create()
     {
-        //
+        $types = DeveloperType::all();
+        return view('PeerReview.Developers.add', compact('types'));
     }
 
     /**
@@ -37,7 +40,10 @@ class DevelopersController extends Controller
      */
     public function store()
     {
-        //
+        $input = Request::all();
+        Developer::create($input);
+
+        return $input;
     }
 
     /**
