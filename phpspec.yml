@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: PeerReview
+        psr4_prefix: PeerReview
+        src_path: app
