@@ -13,9 +13,11 @@ class DevelopersController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @param string $sortby
+     * @param string $order
+     * @return \Illuminate\View\View
      */
-    public function index($sortby = null, $order = null)
+    public function index($sortby = 'firstName', $order = 'asc')
     {
 
         if ($sortby && $order) {
@@ -83,8 +85,11 @@ class DevelopersController extends Controller
      */
     public function update($id)
     {
+        /** @var Developer $developer */
+        $developer = Developer::find($id);
         $input = Request::all();
-        Developer::update($input);
+        $developer->update($input);
+        $developer->save();
 
         return redirect('developers');
     }

@@ -1,25 +1,25 @@
 <div class="form-group">
-{!! Form::label('firstName', 'First name') !!}
+{!! Form::label('firstName', trans('messages.firstname')) !!}
 {!! Form::text('firstName', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-{!! Form::label('middleName', 'Middle name') !!}
+{!! Form::label('middleName', trans('messages.middlename')) !!}
 {!! Form::text('middleName', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-{!! Form::label('lastName', 'Last name') !!}
+{!! Form::label('lastName', trans('messages.lastname')) !!}
 {!! Form::text('lastName', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-{!! Form::label('gitHubHandle', 'GitHub handle') !!}
+{!! Form::label('gitHubHandle', trans('messages.githubhandle')) !!}
 {!! Form::text('gitHubHandle', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-{!! Form::label('developerType', 'Type') !!}
+{!! Form::label('developerType', trans('messages.type')) !!}
 {!! Form::select('developer_type_id', $types, null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-{!! Form::submit('Save', ['class' => 'btn btn-primary form-control']) !!}
+{!! Form::submit(trans('messages.save'), ['class' => 'btn btn-primary form-control']) !!}
 </div>
 {!! Form::close() !!}
-<a href="{{ URL::route('developers') }}">{{trans('Return to the list')}}</a>
+<a href="{{ URL::route('developers') }}">{{trans('messages.return')}}</a>
