@@ -4,7 +4,7 @@
     <h1>{{trans('messages.peerreviewboard')}}</h1>
 
     <style>
-
+/* TODO: move to CSS / SCSS files */
         #div1 {
             width: 350px;
             height: 70px;
@@ -41,6 +41,19 @@
     </style>
 
     <script>
+        /* TODO: Move to js file */
+        $(document).ready(function() {
+           var localData = localStorage.getItem('peerReviewBoard');
+           var localDataJSON = JSON.parse(localData);
+
+            jQuery.each(localDataJSON, function(index) {
+                var entry = document.getElementById(this);
+                var slot = document.getElementById(index);
+                slot.appendChild(entry);
+               var bla = 'foo';
+            });
+        });
+
         function allowDrop(ev) {
             ev.preventDefault();
         }
@@ -53,6 +66,22 @@
             ev.preventDefault();
             var data = ev.dataTransfer.getData("text");
             ev.target.appendChild(document.getElementById(data));
+
+            updateLocalStorage();
+        }
+
+        function updateLocalStorage()
+        {
+            var localData = {};
+            $('.reviewBoardSlot').each(function(index) {
+                //localData[index] = 'bla';
+                var entry = $(this).find('.reviewBoardEntry').first();
+
+                if(entry) {
+                   localData[$(this).attr('id')] = entry.attr('id');
+                }
+            });
+            localStorage.setItem('peerReviewBoard', JSON.stringify(localData));
         }
     </script>
     <div class="con"
@@ -90,12 +119,4 @@
             </div>
         @endforeach
     </div>
-    </div>
-
-    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-    <div id="dragDiv" draggable="true" ondragstart="drag(event)"></div>
-    <img id="drag1" src="http://www.w3schools.com/html/img_w3slogo.gif" draggable="true"
-         ondragstart="drag(event)" width="336" height="69">
-
-
 @stop
