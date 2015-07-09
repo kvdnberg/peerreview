@@ -15,10 +15,11 @@ class PeerReviewController extends Controller
     {
         $developers = Developer::all();
 
-        foreach($developers as $developer) {
+        foreach ($developers as $developer) {
             $type = $developer->developerType()->first();
             $bla = 'foo';
         }
+
         return view('PeerReview.index', compact('developers'));
     }
 }
