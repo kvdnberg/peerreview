@@ -29,6 +29,7 @@ class DevelopersController extends Controller
             $developers = Developer::all();
         }
 
+
         return view('PeerReview.Developers.index', compact('developers', 'sortby', 'order'));
     }
 
@@ -104,7 +105,7 @@ class DevelopersController extends Controller
         $developer->update($input);
 
         //clear the current levels in case something was deselected
-                $developer->levels  ikgeeftoestemming@karinvandenberg.nl()->detach(Level::all()->lists('id')->toArray());
+                $developer->levels()->detach(Level::all()->lists('id')->toArray());
         $levels = Request::input('levels');
         $developer->levels()->attach($levels);
 

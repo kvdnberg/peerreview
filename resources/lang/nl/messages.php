@@ -12,5 +12,6 @@ return [
     'edit_developer' => 'Developer wijzigen',
     'githubhandle' => 'GitHub Handle',
     'return' => 'Terug naar de lijst',
-    'save' => 'Opslaan'
+    'save' => 'Opslaan',
+    'peerreviewboard' => 'Peer Review Board'
 ];

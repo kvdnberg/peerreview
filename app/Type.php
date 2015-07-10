@@ -8,6 +8,6 @@ class Type extends Model
 {
     public function developers()
     {
-        return $this->hasMany('PeerReview\Developers');
+        return $this->hasMany('PeerReview\Developer');
     }
 }
