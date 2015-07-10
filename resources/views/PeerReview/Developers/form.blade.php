@@ -15,8 +15,16 @@
 {!! Form::text('gitHubHandle', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-{!! Form::label('developerType', trans('messages.type')) !!}
-{!! Form::select('developer_type_id', $types, null, ['class' => 'form-control']) !!}
+{!! Form::label('type', trans('messages.type')) !!}
+{!! Form::select('type_id', $types, null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group">
+{!! Form::label('levels', trans('messages.level')) !!}
+{!! Form::select('levels[]', $levels, $developer->levels->lists('id')->toArray(), ['class' => 'form-control', 'multiple']) !!}
+</div>
+<div class="form-group">
+{!! Form::label('skills', trans('messages.skills')) !!}
+{!! Form::select('skills[]', $skills, $developer->skills->lists('id')->toArray(), ['class' => 'form-control', 'multiple']) !!}
 </div>
 <div class="form-group">
 {!! Form::submit(trans('messages.save'), ['class' => 'btn btn-primary form-control']) !!}

@@ -4,7 +4,7 @@ namespace PeerReview;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DeveloperType extends Model
+class Level extends Model
 {
     public function developers()
     {
