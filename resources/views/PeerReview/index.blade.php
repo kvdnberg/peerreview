@@ -4,7 +4,10 @@
     <h1>{{trans('messages.peerreviewboard')}}</h1>
 
     <style>
-/* TODO: move to CSS / SCSS files */
+        /* TODO: move to CSS / SCSS files */
+        p {
+            margin: 0 0 2px;
+        }
         #div1 {
             width: 350px;
             height: 70px;
@@ -43,16 +46,28 @@
     <script>
         /* TODO: Move to js file */
         $(document).ready(function() {
-           var localData = localStorage.getItem('peerReviewBoard');
-           var localDataJSON = JSON.parse(localData);
+
+            @foreach($types as $index => $type)
+            @if($index==0)
+                $('#{{$type->slug}}-tab').tab('show');
+            @endif
+                restoreLocalData('{{$type->slug}}_peerReviewBoard');
+            @endforeach
+
+
+        });
+
+        function restoreLocalData(board)
+        {
+            var localData = localStorage.getItem(board);
+            var localDataJSON = JSON.parse(localData);
 
             jQuery.each(localDataJSON, function(index) {
                 var entry = document.getElementById(this);
                 var slot = document.getElementById(index);
                 slot.appendChild(entry);
-               var bla = 'foo';
             });
-        });
+        }
 
         function allowDrop(ev) {
             ev.preventDefault();
@@ -66,55 +81,57 @@
             ev.preventDefault();
             var data = ev.dataTransfer.getData("text");
             ev.target.appendChild(document.getElementById(data));
+            var slot = $('#' + ev.target.id);
+            var board = slot.closest('.peerReviewBoard').attr('id');
 
-            updateLocalStorage();
+            updateLocalStorage(board);
         }
 
-        function updateLocalStorage()
+        function updateLocalStorage(board)
         {
             var localData = {};
-            $('.reviewBoardSlot').each(function(index) {
+            $('#' + board + ' .reviewBoardSlot').each(function(index) {
                 //localData[index] = 'bla';
                 var entry = $(this).find('.reviewBoardEntry').first();
 
                 if(entry) {
-                   localData[$(this).attr('id')] = entry.attr('id');
+                    localData[$(this).attr('id')] = entry.attr('id');
                 }
             });
-            localStorage.setItem('peerReviewBoard', JSON.stringify(localData));
+            localStorage.setItem(board, JSON.stringify(localData));
         }
     </script>
-    <div class="con"
-    <div class="col-md-6" id="peerReviewBoard">
-        <div class="col-md-3" id="authorColumn">
-            Authors
-            @for($i = 0 ; $i < count($developers); $i++)
-                <div class="well reviewBoardSlot" ondrop="drop(event)" ondragover="allowDrop(event)"  id="author_{{$i}}"></div>
-            @endfor
-        </div>
-        <div class="col-md-3" id="reviewerColumn">
-            Reviewers
-            @for($i = 0 ; $i < count($developers); $i++)
-                <div class="well reviewBoardslot" ondrop="drop(event)" ondragover="allowDrop(event)" id="reviewer_{{$i}}"></div>
-            @endfor
-        </div>
-    </div>
-    <div class="col-md-3" id="peerAuthorsGrabBag">
-        @foreach($developers as $developer)
-            <div class="well reviewBoardEntry" draggable="true" ondragstart="drag(event)" id="author_{{$developer->id}}_developer">
-                {{$developer->fullName}}<br />
-                {{$developer->developerType()->first()->type}}<br />
-                &#64;{{$developer->gitHubHandle}}
-
-            </div>
+    <ul id="boardTabs" class="nav nav-tabs" role="tablist">
+        @foreach($types as $type)
+            <li role="presentation"><a href="#{{$type->slug}}" role="tab" id="{{$type->slug}}-tab" data-toggle="tab" aria-controls="{{$type->slug}}" aria-expanded="true">{{$type->type}}</a></li>
         @endforeach
-    </div>
-    <div class="col-md-3" id="peerReviewersGrabBag">
-        @foreach($developers as $developer)
-            <div class="well reviewBoardEntry" draggable="true" ondragstart="drag(event)" id="reviewer_{{$developer->id}}_developer">
-                {{$developer->fullName}}<br />
-                {{$developer->developerType()->first()->type}}<br />
-                &#64;{{$developer->gitHubHandle}}
+    </ul>
+    <div id="boardTabContent" class="tab-content">
+        @foreach($types as $type)
+            <div id="{{$type->slug}}" role="tabpanel" class="tab-pane fade" aria-labelledby="{{$type->slug}}-tab">
+                <div class="col-md-6 peerReviewBoard" id="{{$type->slug}}_peerReviewBoard">
+                    @foreach($columns as $column => $columnText)
+                    <div class="col-md-6" id="{{$column}}Column">
+                        {{$columnText}}
+                        @for($i = 0 ; $i < count($type->developers); $i++)
+                            <div class="well reviewBoardSlot" ondrop="drop(event)" ondragover="allowDrop(event)"  id="{{$type->slug}}_{{$column}}_{{$i}}"></div>
+                        @endfor
+                    </div>
+                    @endforeach
+                </div>
+                @foreach($columns as $column => $columnText)
+                <div class="col-md-3" id="peer{{$columnText}}GrabBag">
+                    @foreach($type->developers as $developer)
+                        <div class="well reviewBoardEntry" draggable="true" ondragstart="drag(event)" id="{{$type->slug}}_{{$column}}_{{$developer->id}}_developer">
+                            <p>{{$developer->fullName}}</p>
+                            <p>{{$developer->levelsString}}</p>
+                            <p>{{$developer->skillsString}}</p>
+                            &#64;{{$developer->gitHubHandle}}
+
+                        </div>
+                    @endforeach
+                </div>
+                    @endforeach
 
             </div>
         @endforeach

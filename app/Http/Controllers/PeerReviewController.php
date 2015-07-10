@@ -4,6 +4,7 @@ namespace PeerReview\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PeerReview\Developer;
+use PeerReview\Type;
 use PeerReview\PeerReview;
 
 use PeerReview\Http\Requests;
@@ -13,13 +14,11 @@ class PeerReviewController extends Controller
 {
     public function index()
     {
-        $developers = Developer::all();
+        $types = Type::all();
 
-        foreach ($developers as $developer) {
-            $type = $developer->developerType()->first();
-            $bla = 'foo';
-        }
 
-        return view('PeerReview.index', compact('developers'));
+        $columns = ['author' => 'Authors', 'reviewer' => 'Reviewers'];
+
+        return view('PeerReview.index', compact('types', 'columns'));
     }
 }

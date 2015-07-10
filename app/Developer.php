@@ -26,4 +26,13 @@ class Developer extends Model
     {
         return implode(' ', [$this->firstName, $this->middleName, $this->lastName]);
     }
+
+    public function getLevelsStringAttribute()
+    {
+        return implode('/', $this->levels()->lists('level')->toArray());
+    }
+    public function getSkillsStringAttribute()
+    {
+        return implode(', ', $this->skills()->lists('skill')->toArray());
+    }
 }

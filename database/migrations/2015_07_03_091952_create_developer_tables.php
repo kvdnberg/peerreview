@@ -15,17 +15,20 @@ class CreateDeveloperTables extends Migration
         Schema::create('types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
+            $table->string('slug');
             $table->timestamps();
         });
 
         DB::table('types')->insert(
             array(
                 'type' => 'Frontend Developer',
+                'slug' => 'frontend'
             )
         );
         DB::table('types')->insert(
             array(
                 'type' => 'Backend Developer',
+                'slug' => 'backend'
             )
         );
 
