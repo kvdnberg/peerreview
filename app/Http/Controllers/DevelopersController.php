@@ -3,7 +3,10 @@
 namespace PeerReview\Http\Controllers;
 
 use PeerReview\Developer;
-use PeerReview\DeveloperType;
+use PeerReview\PeerReview;
+use PeerReview\Type;
+use PeerReview\Level;
+use PeerReview\Skill;
 use PeerReview\Http\Requests;
 use PeerReview\Http\Controllers\Controller;
 use Request;
@@ -36,8 +39,11 @@ class DevelopersController extends Controller
      */
     public function create()
     {
-        $types = DeveloperType::lists('type', 'id');
-        return view('PeerReview.Developers.add', compact('types'));
+        $types = Type::lists('type', 'id');
+        $levels = Level::lists('level', 'id');
+        $skills = Skill::lists('skill', 'id');
+        $developer = new Developer;
+        return view('PeerReview.Developers.add', compact('types', 'levels', 'skills', 'developer'));
     }
 
     /**
@@ -48,7 +54,12 @@ class DevelopersController extends Controller
     public function store()
     {
         $input = Request::all();
-        Developer::create($input);
+        $developer = Developer::create($input);
+
+        $levels = Request::input('levels');
+        $developer->levels()->attach($levels);
+        $skills = Request::input('skills');
+        $developer->skills()->attach($skills);
 
         return redirect('developers');
     }
@@ -72,9 +83,11 @@ class DevelopersController extends Controller
      */
     public function edit($id)
     {
-        $types = DeveloperType::lists('type', 'id');
+        $types = Type::lists('type', 'id');
+        $levels = Level::lists('level', 'id');
+        $skills = Skill::lists('skill', 'id');
         $developer = Developer::find($id);
-        return view('PeerReview.Developers.edit', compact('types', 'developer'));
+        return view('PeerReview.Developers.edit', compact('types', 'levels', 'skills', 'developer'));
     }
 
     /**
@@ -89,6 +102,18 @@ class DevelopersController extends Controller
         $developer = Developer::find($id);
         $input = Request::all();
         $developer->update($input);
+
+        //clear the current levels in case something was deselected
+                $developer->levels  ikgeeftoestemming@karinvandenberg.nl()->detach(Level::all()->lists('id')->toArray());
+        $levels = Request::input('levels');
+        $developer->levels()->attach($levels);
+
+        //clear the current skills in case something was deselected
+        $developer->skills()->detach(Skill::all()->lists('id')->toArray());
+        $skills = Request::input('skills');
+        $developer->skills()->attach($skills);
+
+
         $developer->save();
 
         return redirect('developers');
