@@ -1,8 +1,7 @@
-<?php
+<?php namespace App\Events;
 
-namespace PeerReview\Events;
+abstract class Event {
 
-abstract class Event
-{
-    //
+	//
+
 }
