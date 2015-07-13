@@ -52,7 +52,9 @@ return [
 	|
 	*/
 
-	'locale' => 'en',
+    'locale' => 'nl',
+    'locales' => ['nl' => 'Nederlands', 'en' => 'English'],
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -65,7 +67,7 @@ return [
 	|
 	*/
 
-	'fallback_locale' => 'en',
+	'fallback_locale' => 'nl',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -136,6 +138,8 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 
+        'Illuminate\Html\HtmlServiceProvider',
+
 		/*
 		 * Application Service Providers...
 		 */
@@ -145,7 +149,11 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 
-	],
+        'GrahamCampbell\GitHub\GitHubServiceProvider',
+        'Laracasts\Utilities\JavaScript\JavascriptServiceProvider',
+
+
+    ],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -192,7 +200,9 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
-
+        'GitHub'    => 'GrahamCampbell\GitHub\Facades\GitHub',
+        'Html'      => 'Illuminate\Html\HtmlFacade',
+        'Form'      => 'Illuminate\Html\FormFacade',
 	],
 
 ];
