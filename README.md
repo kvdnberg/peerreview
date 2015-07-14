@@ -6,7 +6,7 @@ To replace the Netwerven Post-It version so that we can all see the Peer Review 
 ## Laravel 5.0: installation instructions
 
 
-1. clone this repo on your machine
+1. clone this repo on your machine (git clone -b develop <repo url>)
 2. copy .env.example to .env and change the parameters for database etc.
 
 For Vagrant Box (Netwerven)
