@@ -8,13 +8,17 @@ class UserTableSeeder extends Seeder {
 
     public function run()
     {
-        DB::table('users')->delete();
+        $existingUser = User::where('email', '=', env('USER_EMAIL'))->first();
 
-        User::create( [
-            'name' => 'Name',
-            'email' => 'EmailIsUsername',
-            'password' => Hash::make('Password')
-        ]);
+        if(!$existingUser) {
+            DB::table('users')->delete();
+
+            User::create([
+                'name' => env('USER_NAME'),
+                'email' => env('USER_EMAIL'),
+                'password' => Hash::make(env('USER_PASSWORD'))
+            ]);
+        }
     }
 
 }

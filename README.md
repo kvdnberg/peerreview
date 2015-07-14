@@ -5,20 +5,22 @@ To replace the Netwerven Post-It version so that we can all see the Peer Review 
 
 ## Laravel 5.0: installation instructions
 
-For Netwervers: using netwerven vagrant box:
 
 1. clone this repo on your machine
-2. in the repo dir, run: project --ip-address=192.168.10.2xx
-3. vagrant up
-4. vagrant ssh
-5. adjust apache config (sites-enabled/000-default), replace /var/www/app with /var/www/public
-6. copy .env.example and change database parameters.
+2. copy .env.example to .env and change the parameters for database etc.
+
+For Vagrant Box (Netwerven)
+3. in the repo dir, run: project --ip-address=192.168.10.2xx
+4. vagrant up
+5. vagrant ssh
+
+For Server as well as Vagrant box:
+6. adjust apache config (sites-enabled/000-default), replace /var/www/app with /var/www/public
+
+For Server:
 7. composer install
-8. sudo npm install
-9. gulp (will be added to composer later)
-10. php artisan migrate
-11. Change database/seeds/UserTableSeeder to add a user that can edit the peer review board
-12. php artisan db:seeds
+
+
 
 
 Any remarks or additions? Send them to karin < at > netwerven < dot > nl
