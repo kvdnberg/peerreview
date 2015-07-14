@@ -16,5 +16,9 @@ For Netwervers: using netwerven vagrant box:
 7. composer install
 8. sudo npm install
 9. gulp (will be added to composer later)
+10. php artisan migrate
+11. Change database/seeds/UserTableSeeder to add a user that can edit the peer review board
+12. php artisan db:seeds
+
 
 Any remarks or additions? Send them to karin < at > netwerven < dot > nl
