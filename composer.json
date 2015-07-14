@@ -37,7 +37,7 @@
             "php artisan migrate",
             "php artisan db:seed",
             "[ ! -f ./package.json ] || npm cache clean && npm install",
-            "[ ! -f ./gulpfile.js ] || gulp"
+            "[ ! -f ./gulpfile.js ] || gulp --force"
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
@@ -45,7 +45,7 @@
             "php artisan migrate",
             "php artisan db:seed",
             "[ ! -f ./package.json ] || npm cache clean && npm install",
-            "[ ! -f ./gulpfile.js ] || gulp"
+            "[ ! -f ./gulpfile.js ] || gulp --force"
 		],
 		"post-create-project-cmd": [
 			"php -r \"copy('.env.example', '.env');\"",
