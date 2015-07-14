@@ -8,7 +8,7 @@
     <tr><th></th>
         <th>{{ trans('messages.name') }}</th><th>{{ trans('messages.type') }}</th><th>{{ trans('messages.level') }}</th><th>{{ trans('messages.skills') }}</th></tr>
     {% for developer in developers %}
-       <tr><td><a href="{{ URL.route('developers_edit', {'id': developer.id}) }}" class="glyphicon glyphicon-edit" title="{{ trans('messages.edit') }}"></a></td>
+       <tr><td><a href="{{ url_route('editDeveloper', {'id': developer.id}) }}" class="glyphicon glyphicon-edit" title="{{ trans('messages.edit') }}"></a></td>
            <td>{{ developer.full_name }}</td>
            <td>{{developer.type.type}}</td>
            <td>{{developer.levelsString}}</td>
@@ -17,5 +17,5 @@
     {% endfor %}
 </table>
 {% endif %}
-<a href="{{ URL.route('developers_add') }}">{{ trans('messages.add_developer') }}</a>
+<a href="{{ url_route('addDeveloper') }}">{{ trans('messages.add_developer') }}</a>
 {% endblock %}

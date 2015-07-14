@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>{{trans('messages.edit_developer')}}</h1>
-    {{  form_model(developer, {'route': ['developers_update', developer.id]})|raw }}
+    {{  form_model(developer, {'route': ['updateDeveloper', developer.id]})|raw }}
 
     {{ include('PeerReview/Developers/form.twig') }}
 
