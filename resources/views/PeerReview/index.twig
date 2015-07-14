@@ -2,11 +2,11 @@
 
 {% block content %}
     <link rel="stylesheet" href="{{ elixir('css/pages/peerreviewboard.css') }}">
-<script>
-    $(document).ready(function() {
-        $('#{{ types.0.slug}}-tab').tab('show');
-    });
-</script>
+    <script>
+        $(document).ready(function() {
+            $('#{{ types.0.slug}}-tab').tab('show');
+        });
+    </script>
     <h1>{{trans('messages.peerreviewboard')}}</h1>
     <ul id="boardTabs" class="nav nav-tabs" role="tablist">
         {% for type in types %}
@@ -14,22 +14,31 @@
         {% endfor %}
     </ul>
     <div id="boardTabContent" class="tab-content">
-         {% for type in types %}
-        {% set typeDevelopers = attribute(boardDevelopers, type.slug) %}
+        {% for type in types %}
+            {% set typeDevelopers = attribute(boardDevelopers, type.slug) %}
             <div id="{{type.slug}}" role="tabpanel" class="tab-pane fade" aria-labelledby="{{type.slug}}-tab">
-                 <div class="col-md6 peerReviewBoard" id="{{type.slug}}_peerReviewBoard">
-                    {% for column, columnText in columns %}
-                     {% set columnDevelopers = attribute(typeDevelopers, column) %}
-                    <div class="col-md-6" id="{{column}}Column">
-                        {{columnText}}
+                <div class="col-md-12">
+                    {% for columnIndexStart, columnIndexEnd in attribute(columnIndices, type.slug) %}
+                        {% set columnSplit = (attribute(developerCount, type.slug)/2)|round %}
 
-                     {% for i, developer in columnDevelopers %}
-                                    <div class="well reviewBoardEntry" draggable="true" ondragstart="drag(event)" id="{{type.slug}}_{{column}}_{{developer.id}}_developer">
-                                        <h4>{{developer.fullName}}</h4>
-                                       <p><i class="fa fa-github-alt"></i> <a href="https://github.com/{{developer.gitHubHandle}}">&#64;{{developer.gitHubHandle}}</a></p>
-                                    </div>
-                        {% endfor %}
-                    </div>
+                        <div class="col-md6 peerReviewBoard" id="{{type.slug}}_peerReviewBoard">
+                            {% for column, columnText in columns %}
+                                {% set columnDevelopers = attribute(typeDevelopers, column) %}
+                                <div class="col-md-3" id="{{column}}Column">
+                                    {{columnText}}
+
+                                    {% for i in columnIndexStart..columnIndexEnd %}
+                                        {% set developer = attribute(columnDevelopers, i) %}
+                                        {% if developer %}
+                                            <div class="well reviewBoardEntry" draggable="true" ondragstart="drag(event)" id="{{type.slug}}_{{column}}_{{developer.id}}_developer">
+                                                <h4>{{developer.fullName}}</h4>
+                                                <p><i class="fa fa-github-alt"></i> <a href="https://github.com/{{developer.gitHubHandle}}">&#64;{{developer.gitHubHandle}}</a></p>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
                     {% endfor %}
                 </div>
             </div>

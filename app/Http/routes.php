@@ -12,12 +12,12 @@
 */
 
 Route::get('/', 'PeerReviewController@index');
-Route::get('edit/{id?}', 'PeerReviewController@edit');
-Route::get('developers/add', array('as' => 'developers_add', 'uses' => 'DevelopersController@create'));
-Route::get('developers/edit/{id}', array('as' => 'developers_edit', 'uses' => 'DevelopersController@edit'));
-Route::post('developers/update/{id}', array('as' => 'developers_update', 'uses' => 'DevelopersController@update'));
-Route::post('developers', 'DevelopersController@store');
+Route::get('edit/{id?}', ['middleware' => 'auth.basic', 'uses' => 'PeerReviewController@edit']);
+Route::get('developers/add', ['middleware' => 'auth.basic', 'as' => 'developers_add', 'uses' => 'DevelopersController@create']);
+Route::get('developers/edit/{id}', ['middleware' => 'auth.basic', 'as' => 'developers_edit', 'uses' => 'DevelopersController@edit']);
+Route::post('developers/update/{id}', ['middleware' => 'auth.basic', 'as' => 'developers_update', 'uses' => 'DevelopersController@update']);
+Route::post('developers', ['middleware' => 'auth.basic', 'uses' =>'DevelopersController@store']);
 
-Route::get('developers/{sortby?}/{order?}', array('as' => 'developers', 'uses' =>'DevelopersController@index'));
+Route::get('developers/{sortby?}/{order?}', ['middleware' => 'auth.basic', 'as' => 'developers', 'uses' =>'DevelopersController@index']);
 
-Route::post('saveReviewBoard', 'PeerReviewController@store');
+Route::post('saveReviewBoard', ['middleware' => 'auth.basic','uses' => 'PeerReviewController@store']);

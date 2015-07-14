@@ -26,4 +26,11 @@ class PeerReview extends Model
         return $boardDevelopers;
 
     }
+
+    public function getDeveloperCount()
+    {
+        $board = $this->board;
+        $board = json_decode($board);
+        return count((array)$board);
+    }
 }

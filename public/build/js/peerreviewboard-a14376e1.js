@@ -2,13 +2,15 @@
 function restoreLocalData(board)
 {
     var localData = localStorage.getItem(board);
-    var localDataJSON = JSON.parse(localData);
+    if(localData) {
+        var localDataJSON = JSON.parse(localData);
 
-    jQuery.each(localDataJSON, function(index) {
-        var entry = document.getElementById(this);
-        var slot = document.getElementById(index);
-        slot.appendChild(entry);
-    });
+        jQuery.each(localDataJSON, function (index) {
+            var entry = document.getElementById(this);
+            var slot = document.getElementById(index);
+            slot.appendChild(entry);
+        });
+    }
 }
 
 function allowDrop(ev) {
@@ -24,7 +26,7 @@ function drop(ev) {
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
     var slot = $('#' + ev.target.id);
-    var board = slot.closest('.peerReviewBoard').attr('id');
+    var board = slot.closest('.peerReviewBoardEdit').attr('id');
 
     updateLocalStorage(board);
 }

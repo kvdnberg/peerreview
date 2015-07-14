@@ -17,16 +17,24 @@ class PeerReviewController extends BaseController
     {
         $types = Type::all();
         $boards = PeerReview::where('current', '=', true)->get();
+        $boardDevelopers = [];
+        $columnIndices = [];
 
+        /** @var PeerReview $board */
         foreach($boards as $board) {
             $type = Type::find($board->type_id);
-
             $boardDevelopers[$type->slug] = $board->getBoardDevelopers();
+
+            /* Not too elegant way to calculate where to split the list into two columns */
+            $developerCount = $board->getDeveloperCount();
+            $split = round($developerCount/2, 0, PHP_ROUND_HALF_DOWN);
+            $columnIndices[$type->slug] = [0 => $split, $split+1 => $developerCount];
         }
+
 
         $columns = ['author' => 'Authors', 'reviewer' => 'Reviewers'];
 
-        return view('PeerReview.index', compact('boardDevelopers', 'types', 'columns'));
+        return view('PeerReview.index', compact('boardDevelopers', 'developerCount', 'types', 'columns', 'columnIndices'));
     }
 
     public function edit($id = null)
@@ -49,9 +57,18 @@ class PeerReviewController extends BaseController
         $boards = json_decode($input['reviewBoard']);
 
         foreach($boards as $type_slug => $board) {
+
             $boardString = json_encode($board);
             $peerReview = new PeerReview();
             $type = Type::where('slug', '=', $type_slug)->first();
+
+            //set the other boards as non-current
+            $currentBoards = PeerReview::where('current', '=', true)->where('type_id', '=', $type->id)->get();
+            foreach($currentBoards as $currentBoard) {
+                $currentBoard->current = false;
+                $currentBoard->save();
+            }
+
             $peerReview->type_id = $type->id;
             $peerReview->board = $boardString;
             $peerReview->current = true;
