@@ -1,0 +1,62 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+    <link rel="stylesheet" href="{{ elixir('css/pages/peerreviewboard.css') }}">
+    <script src="{{ elixir('js/peerreviewboard.js') }}"></script>
+
+    <h1>{{trans('messages.peerreviewboard')}}</h1>
+    <script>
+        $(document).ready(function() {
+
+            var localDataVars = [];
+            {% for index, type in types %}
+
+            var thisBoard = '{{type.slug}}_peerReviewBoard';
+
+            {% if(index==0) %}
+            $('#{{type.slug}}-tab').tab('show');
+            {% endif %}
+            localDataVars['{{index}}'] = thisBoard;
+            restoreLocalData(thisBoard);
+
+            $('#saveBoard_{{type.slug}}').on('click', function() {
+               storePeerReviewBoard(['{{type.slug}}'], $('meta[name=_token]').attr('content'));
+            });
+            {% endfor %}
+        });
+    </script>
+    <ul id="boardTabs" class="nav nav-tabs" role="tablist">
+        {% for type in types %}
+            <li role="presentation"><a href="#{{type.slug}}" role="tab" id="{{type.slug}}-tab" data-toggle="tab" aria-controls="{{type.slug}}" aria-expanded="true">{{type.type}}</a></li>
+        {% endfor %}
+    </ul>
+    <div id="boardTabContent" class="tab-content">
+        {% for type in types %}
+            <div id="{{type.slug}}" role="tabpanel" class="tab-pane fade" aria-labelledby="{{type.slug}}-tab">
+                <button id="saveBoard_{{type.slug}}" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i></button>
+                <div class="col-md-6 peerReviewBoardEdit" id="{{type.slug}}_peerReviewBoard">
+                    {% for column, columnText in columns %}
+                    <div class="col-md-6" id="{{column}}Column">
+                        {{columnText}}
+                        {% for i in 0..type.developers|length %}
+                            <div class="well reviewBoardSlot" ondrop="drop(event)" ondragover="allowDrop(event)"  id="{{type.slug}}_{{column}}_{{i}}"></div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% for column, columnText in columns %}
+                <div class="col-md-3" id="peer{{columnText}}GrabBag">
+                    {% for developer in type.developers %}
+                        <div class="well reviewBoardEntry" draggable="true" ondragstart="drag(event)" id="{{type.slug}}_{{column}}_{{developer.id}}_developer">
+                            <p>{{developer.fullName}}</p>
+                            <p>{{developer.levelsString}}</p>
+                            <p>{{developer.skillsString}}</p>
+                            <i class="fa fa-github-alt"></i> &#64;{{developer.gitHubHandle}}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

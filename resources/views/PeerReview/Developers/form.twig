@@ -1,0 +1,33 @@
+<div class="form-group">
+{{ form_label('firstName', trans('messages.firstname')) }}
+{{ form_text('firstName', null, {'class': 'form-control'}) }}
+</div>
+<div class="form-group">
+{{ form_label('middleName', trans('messages.middlename')) }}
+{{ form_text('middleName', null, {'class': 'form-control'}) }}
+</div>
+<div class="form-group">
+{{ form_label('lastName', trans('messages.lastname')) }}
+{{ form_text('lastName', null, {'class': 'form-control'}) }}
+</div>
+<div class="form-group">
+{{ form_label('gitHubHandle', trans('messages.githubhandle')) }}
+{{ form_text('gitHubHandle', null, {'class': 'form-control'}) }}
+</div>
+<div class="form-group">
+{{ form_label('type', trans('messages.type')) }}
+{{ form_select('type_id', types, null, {'class': 'form-control'}) }}
+</div>
+<div class="form-group">
+{{ form_label('levels', trans('messages.level')) }}
+{{ form_select('levels[]', levels, developer.levels.lists('id'), {'class': 'form-control', 'multiple': 'multiple'}) }}
+</div>
+<div class="form-group">
+{{ form_label('skills', trans('messages.skills')) }}
+{{ form_select('skills[]', skills, developer.skills.lists('id'), {'class': 'form-control', 'multiple': 'multiple'}) }}
+</div>
+<div class="form-group">
+{{ form_submit(trans('messages.save'), {'class': 'btn btn-primary form-control'}) }}
+</div>
+{{ form_close() }}
+<a href="{{ URL.route('developers') }}">{{trans('messages.return')}}</a>
