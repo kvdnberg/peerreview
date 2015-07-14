@@ -35,7 +35,7 @@
 			"php artisan clear-compiled",
 			"php artisan optimize",
             "php artisan migrate",
-            "php artisan db:seeds",
+            "php artisan db:seed",
             "[ ! -f ./package.json ] || npm cache clean && npm install",
             "[ ! -f ./gulpfile.js ] || gulp production --force"
 		],
