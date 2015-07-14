@@ -21,3 +21,5 @@ Route::post('developers', ['middleware' => 'auth.basic', 'uses' =>'DevelopersCon
 Route::get('developers/{sortby?}/{order?}', ['middleware' => 'auth.basic', 'as' => 'showDevelopers', 'uses' =>'DevelopersController@index']);
 
 Route::post('saveReviewBoard', ['middleware' => 'auth.basic','uses' => 'PeerReviewController@store']);
+
+Route::get('gitHub', 'GitHubStatsController@index');

@@ -1,0 +1,9 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+    <h1>{{ trans('messages.githubHeader') }}</h1>
+
+    Open PRs: {{ stats.openPrCount }}
+
+
+{% endblock %}
