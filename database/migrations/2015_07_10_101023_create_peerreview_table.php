@@ -12,9 +12,9 @@ class CreatePeerReviewTable extends Migration
      */
     public function up()
     {
-        Schema::create('peerreview', function (Blueprint $table) {
+        Schema::create('peer_reviews', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('board');
+            $table->text('board');
             $table->integer('type_id')->unsigned();
             $table->boolean('current');
             $table->timestamps();

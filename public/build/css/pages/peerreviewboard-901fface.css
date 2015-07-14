@@ -13,9 +13,16 @@ p {
   padding: 10px;
   border: 1px solid #aaaaaa; }
 
-.reviewBoardSlot {
+.peerReviewBoardEdit .reviewBoardSlot {
   width: 100%;
   height: 140px; }
+
+.peerReviewBoard .reviewBoardSlot {
+  width: 100%;
+  height: 100px; }
+
+.reviewBoardEntry a {
+  color: #000000; }
 
 #authorColumn .reviewBoardSlot {
   background-color: #ffce75; }

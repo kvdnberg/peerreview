@@ -10,4 +10,9 @@ class Type extends Model
     {
         return $this->hasMany('App\Developer');
     }
+
+    public function peerReview()
+    {
+        return $this->hasOne('App\PeerReview');
+    }
 }
