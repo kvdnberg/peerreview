@@ -138,7 +138,7 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 
-        'Illuminate\Html\HtmlServiceProvider',
+        'Collective\Html\HtmlServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -152,6 +152,7 @@ return [
         'GrahamCampbell\GitHub\GitHubServiceProvider',
         'Laracasts\Utilities\JavaScript\JavascriptServiceProvider',
 
+        'TwigBridge\ServiceProvider',
 
     ],
 
@@ -201,8 +202,9 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
         'GitHub'    => 'GrahamCampbell\GitHub\Facades\GitHub',
-        'Html'      => 'Illuminate\Html\HtmlFacade',
-        'Form'      => 'Illuminate\Html\FormFacade',
+        'Form'      => 'Collective\Html\FormFacade',
+        'Html'      => 'Collective\Html\HtmlFacade',
+        'Twig'      => 'TwigBridge\Facade\Twig',
 	],
 
 ];
