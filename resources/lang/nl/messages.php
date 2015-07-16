@@ -2,6 +2,8 @@
 
 return [
     'type' => 'Type',
+    'level' => 'Niveau',
+    'skills' => 'Expertises',
     'name' => 'Naam',
     'edit' => 'Wijzigen',
     'firstname' => 'Voornaam',
@@ -13,5 +15,7 @@ return [
     'githubhandle' => 'GitHub Handle',
     'return' => 'Terug naar de lijst',
     'save' => 'Opslaan',
-    'peerreviewboard' => 'Peer Review Board'
+    'peerreviewboard' => 'Peer Review Board',
+    'confirmSave' => 'Weet je zeker dat je het PR board wilt opslaan?',
+    'confirmReset' => 'Weet je zeker dat je het PR board wilt resetten?'
 ];

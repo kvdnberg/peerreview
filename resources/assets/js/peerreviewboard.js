@@ -21,17 +21,24 @@ function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
-function drop(ev) {
+function drop(ev, allowMultiple) {
     ev.preventDefault();
+    if (ev.target.hasChildNodes() && allowMultiple == false) { return; } //only 1 developer per slot
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
     var slot = $('#' + ev.target.id);
     var board = slot.closest('.peerReviewBoardEdit').attr('id');
 
-    updateLocalStorage(board);
+    updateLocalData(board);
 }
 
-function updateLocalStorage(board)
+function resetLocalData(board) {
+    if(board) {
+        localStorage.removeItem(board);
+    }
+}
+
+function updateLocalData(board)
 {
     if(board) {
         var localData = {};
@@ -46,46 +53,43 @@ function updateLocalStorage(board)
     }
 }
 
-function getReviewBoardJSON(types)
+function getReviewBoardJSON(type)
 {
-    if(types) {
-        var jsonArray = {};
-        jQuery.each(types, function(index)
-        {
-            jsonArray[this] = {};
-            var currentType = this;
-            var localData = localStorage.getItem(this + '_peerReviewBoard');
+            var jsonArray = {};
+            jsonArray[type] = {};
+
+            var localData = localStorage.getItem(type + '_peerReviewBoard');
             var localDataJSON = JSON.parse(localData);
             jQuery.each(localDataJSON, function (index) {
 
                 var splitIndex = index.split('_');
                 var splitData = this.split('_');
                 var jsonIndex = splitIndex[2];
-                if(jsonArray[currentType][jsonIndex] == undefined) {
-                    jsonArray[currentType][jsonIndex] = {};
+                if(jsonArray[type][jsonIndex] == undefined) {
+                    jsonArray[type][jsonIndex] = {};
                 }
 
                 var devId = splitData[2];
                 var devRole = splitIndex[1];
-                jsonArray[currentType][jsonIndex][devRole] = devId;
+                jsonArray[type][jsonIndex][devRole] = devId;
             });
-        });
 
         return JSON.stringify(jsonArray);
-    }
 
 }
 
-function storePeerReviewBoard(types, _token)
+function storePeerReviewBoard(type, _token)
 {
-    var boardResult = getReviewBoardJSON(types);
-   // data['_token'] = _token;
+    var boardResult = getReviewBoardJSON(type);
     $.ajax({
         url: storeAjaxRoute,
         type: 'post',
         data: {'reviewBoard': boardResult},
         success: function (data) {
-
+            $('#saveBoard_' + type).button('reset');
+        },
+        error: function() {
+            //TODO
         }
     });
 }

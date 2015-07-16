@@ -43,3 +43,7 @@ p {
 #peerReviewersGrabBag .reviewBoardEntry, #reviewerColumn .reviewBoardEntry{
   background-color: #16cc19;
 }
+
+#peerAuthorsGrabBag, #peerReviewersGrabBag {
+  min-height: 800px;
+}

@@ -3,6 +3,7 @@
 {% block content %}
     <link rel="stylesheet" href="{{ elixir('css/pages/peerreviewboard.css') }}">
     <script src="{{ elixir('js/peerreviewboard.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
     <h1>{{trans('messages.peerreviewboard')}}</h1>
     <script>
@@ -19,8 +20,24 @@
             localDataVars['{{index}}'] = thisBoard;
             restoreLocalData(thisBoard);
 
+            $('#resetBoard_{{type.slug}}').on('click', function() {
+                bootbox.confirm('{{ trans('messages.confirmReset') }}', function(result) {
+                    if(result==true) {
+                        resetLocalData('{{type.slug}}_peerReviewBoard');
+                        location.reload();
+                    }
+                });
+
+            });
+
             $('#saveBoard_{{type.slug}}').on('click', function() {
-               storePeerReviewBoard(['{{type.slug}}'], $('meta[name=_token]').attr('content'));
+                bootbox.confirm('{{ trans('messages.confirmSave') }}', function(result) {
+                    if(result==true) {
+                        var $btn = $(this).button('loading');
+                        storePeerReviewBoard(['{{type.slug}}'], $('meta[name=_token]').attr('content'));
+                    }
+                });
+
             });
             {% endfor %}
         });
@@ -33,19 +50,24 @@
     <div id="boardTabContent" class="tab-content">
         {% for type in types %}
             <div id="{{type.slug}}" role="tabpanel" class="tab-pane fade" aria-labelledby="{{type.slug}}-tab">
-                <button id="saveBoard_{{type.slug}}" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i></button>
                 <div class="col-md-6 peerReviewBoardEdit" id="{{type.slug}}_peerReviewBoard">
                     {% for column, columnText in columns %}
                     <div class="col-md-6" id="{{column}}Column">
                         {{columnText}}
                         {% for i in 0..type.developers|length %}
-                            <div class="well reviewBoardSlot" ondrop="drop(event)" ondragover="allowDrop(event)"  id="{{type.slug}}_{{column}}_{{i}}"></div>
+                            <div class="well reviewBoardSlot" ondrop="drop(event, false)" ondragover="allowDrop(event)"  id="{{type.slug}}_{{column}}_{{i}}"></div>
                         {% endfor %}
                     </div>
                     {% endfor %}
                 </div>
+                <div class="col-md-6">
+                    <p class="text-right">
+                       <button id="saveBoard_{{type.slug}}" class="btn btn-primary" data-loading-text="Saving..."><i class="glyphicon glyphicon-save"></i></button>
+                       <button id="resetBoard_{{type.slug}}" class="btn btn-warning" data-loading-text="Resetting..."><i class="fa fa-undo"></i></button>
+                    </p>
+
                 {% for column, columnText in columns %}
-                <div class="col-md-3" id="peer{{columnText}}GrabBag">
+                <div class="col-md-6" id="peer{{columnText}}GrabBag" ondrop="drop(event, true)" ondragover="allowDrop(event)">
                     {% for developer in type.developers %}
                         <div class="well reviewBoardEntry" draggable="true" ondragstart="drag(event)" id="{{type.slug}}_{{column}}_{{developer.id}}_developer">
                             <p>{{developer.fullName}}</p>
@@ -56,6 +78,7 @@
                     {% endfor %}
                 </div>
                 {% endfor %}
+                </div>
             </div>
         {% endfor %}
     </div>
