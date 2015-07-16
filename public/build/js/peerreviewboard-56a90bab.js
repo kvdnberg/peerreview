@@ -13,28 +13,67 @@ function restoreLocalData(board)
     }
 }
 
-function allowDrop(ev) {
+function allowDrop(ev)
+{
     ev.preventDefault();
 }
 
-function drag(ev) {
+function drag(ev)
+{
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
-function drop(ev, allowMultiple) {
+function drop(ev, allowMultiple)
+{
     ev.preventDefault();
-    if (ev.target.hasChildNodes() && allowMultiple == false) { return; } //only 1 developer per slot
+
+    var board = $('#' + ev.target.id).closest('.tab-pane').find('.peerReviewBoardEdit').attr('id');
     var data = ev.dataTransfer.getData("text");
+    if (dropNotAllowed(ev, allowMultiple, data, board)) { return; }
+
+
     ev.target.appendChild(document.getElementById(data));
-    var slot = $('#' + ev.target.id);
-    var board = slot.closest('.peerReviewBoardEdit').attr('id');
 
     updateLocalData(board);
 }
 
-function resetLocalData(board) {
+/**
+ * Check conditions under which drop is allowed
+ * @param ev
+ * @param allowMultiple
+ * @returns {boolean}
+ */
+function dropNotAllowed(ev, allowMultiple, data, board)
+{
+    if(ev.target.hasChildNodes() && allowMultiple == false) { //only 1 developer per slot
+        return true;
+    }
+    if($('#' + ev.target.id).hasClass('reviewBoardEntry')) {
+        return true; //no developers inside developers! 
+    }
+    var column = findColumn(ev.target.id);
+    if(column) {
+        return !$('#' + data).hasClass(column);
+    }
+    return true;
+
+}
+
+function resetLocalData(board)
+{
     if(board) {
         localStorage.removeItem(board);
+    }
+}
+
+function findColumn(targetId)
+{
+    var columns = ['author', 'reviewer'];
+
+    for(i=0 ; i < columns.length; i++) {
+        if(targetId.indexOf(columns[i]) > -1) {
+            return columns[i];
+        }
     }
 }
 

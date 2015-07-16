@@ -52,7 +52,7 @@
             <div id="{{type.slug}}" role="tabpanel" class="tab-pane fade" aria-labelledby="{{type.slug}}-tab">
                 <div class="col-md-6 peerReviewBoardEdit" id="{{type.slug}}_peerReviewBoard">
                     {% for column, columnText in columns %}
-                    <div class="col-md-6" id="{{column}}Column">
+                    <div class="col-md-6 boardColumn" id="{{column}}Column">
                         {{columnText}}
                         {% for i in 0..type.developers|length %}
                             <div class="well reviewBoardSlot" ondrop="drop(event, false)" ondragover="allowDrop(event)"  id="{{type.slug}}_{{column}}_{{i}}"></div>
@@ -67,9 +67,9 @@
                     </p>
 
                 {% for column, columnText in columns %}
-                <div class="col-md-6" id="peer{{columnText}}GrabBag" ondrop="drop(event, true)" ondragover="allowDrop(event)">
+                <div class="col-md-6 grabBagColumn" id="{{column}}GrabBag" ondrop="drop(event, true)" ondragover="allowDrop(event)">
                     {% for developer in type.developers %}
-                        <div class="well reviewBoardEntry" draggable="true" ondragstart="drag(event)" id="{{type.slug}}_{{column}}_{{developer.id}}_developer">
+                        <div class="well reviewBoardEntry {{ column }}" draggable="true" ondragstart="drag(event)" id="{{type.slug}}_{{column}}_{{developer.id}}_developer">
                             <p>{{developer.fullName}}</p>
                             <p>{{developer.levelsString}}</p>
                             <p>{{developer.skillsString}}</p>

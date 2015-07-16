@@ -32,7 +32,7 @@ p {
   background-color: #ffce75;
 }
 
-#peerAuthorsGrabBag .reviewBoardEntry, #authorColumn .reviewBoardEntry{
+#authorGrabBag .reviewBoardEntry, #authorColumn .reviewBoardEntry{
   background-color: #ff9629;
 }
 
@@ -40,10 +40,10 @@ p {
   background-color: #c9eda2;
 }
 
-#peerReviewersGrabBag .reviewBoardEntry, #reviewerColumn .reviewBoardEntry{
+#reviewerGrabBag .reviewBoardEntry, #reviewerColumn .reviewBoardEntry{
   background-color: #16cc19;
 }
 
-#peerAuthorsGrabBag, #peerReviewersGrabBag {
+#authorGrabBag, #reviewerGrabBag {
   min-height: 800px;
 }
