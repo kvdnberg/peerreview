@@ -6,17 +6,17 @@ To replace the Netwerven Post-It version so that we can all see the Peer Review 
 ## Laravel 5.0: installation instructions
 
 
-* clone this repo on your machine (git clone -b develop <repo url>)
-* copy .env.example to .env and change the parameters for database etc.
+1. clone this repo on your machine (git clone -b develop <repo url>)
+2. copy .env.example to .env and change the parameters for database etc.
 
-For Vagrant Box (Netwerven)
-* in the repo dir, run: project (see Netwerven/vagrant repo for more information)
-* vagrant up
-* vagrant ssh
+    For Vagrant Box (Netwerven)
+3. in the repo dir, run: project (see Netwerven/vagrant repo for more information)
+4. vagrant up
+5. vagrant ssh
 
-For Server as well as Vagrant box:
-* adjust apache config (sites-enabled/000-default for Vagrant), set docroot to /var/www/public and restart apache
-* composer install
+    For Server as well as Vagrant box:
+6. adjust apache config (sites-enabled/000-default for Vagrant), set docroot to /var/www/public and restart apache
+7. composer install
 
 
 
