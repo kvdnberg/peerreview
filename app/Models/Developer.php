@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,16 +10,16 @@ class Developer extends Model
 
     public function type()
     {
-        return $this->belongsTo('App\Type');
+        return $this->belongsTo('App\Models\Type');
     }
 
     public function levels()
     {
-        return $this->belongsToMany('App\Level');
+        return $this->belongsToMany('App\Models\Level');
     }
     public function skills()
     {
-        return $this->belongsToMany('App\Skill');
+        return $this->belongsToMany('App\Models\Skill');
     }
 
     public function getFullNameAttribute()

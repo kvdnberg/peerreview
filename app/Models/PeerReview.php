@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,7 +8,7 @@ class PeerReview extends Model
 {
     public function type()
     {
-        return $this->belongsTo('App\Type');
+        return $this->belongsTo('App\Models\Type');
     }
 
     public function getBoardDevelopers()
@@ -18,8 +18,12 @@ class PeerReview extends Model
         $board = json_decode($board);
         if($board) {
             foreach ($board as $index => $developers) {
-                $boardDevelopers['author'][$index] = Developer::find($developers->author);
-                $boardDevelopers['reviewer'][$index] = Developer::find($developers->reviewer);
+                if(property_exists($developers, 'author')) {
+                    $boardDevelopers['author'][$index] = Developer::find($developers->author);
+                }
+                if(property_exists($developers, 'reviewer')) {
+                    $boardDevelopers['reviewer'][$index] = Developer::find($developers->reviewer);
+                }
 
             }
         }

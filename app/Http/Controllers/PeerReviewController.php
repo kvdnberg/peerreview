@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Laracasts\Utilities\JavaScript\JavaScriptFacade as JavaScript;
-use App\Developer;
-use App\Type;
-use App\PeerReview;
+use App\Models\Developer;
+use App\Models\Type;
+use App\Models\PeerReview;
 use Illuminate\Routing\Controller as BaseController;
 
 use App\Http\Requests;
