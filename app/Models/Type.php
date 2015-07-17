@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,11 +8,11 @@ class Type extends Model
 {
     public function developers()
     {
-        return $this->hasMany('App\Developer');
+        return $this->hasMany('App\Models\Developer');
     }
 
     public function peerReview()
     {
-        return $this->hasOne('App\PeerReview');
+        return $this->hasOne('App\Models\PeerReview');
     }
 }

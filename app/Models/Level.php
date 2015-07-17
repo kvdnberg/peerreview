@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,6 +8,6 @@ class Level extends Model
 {
     public function developers()
     {
-        return $this->hasMany('App\Developers');
+        return $this->hasMany('App\Models\Developer');
     }
 }

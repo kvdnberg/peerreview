@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Developer;
-use App\PeerReview;
-use App\Type;
-use App\Level;
-use App\Skill;
+use App\Models\Developer;
+use App\Models\PeerReview;
+use App\Models\Type;
+use App\Models\Level;
+use App\Models\Skill;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Request;
