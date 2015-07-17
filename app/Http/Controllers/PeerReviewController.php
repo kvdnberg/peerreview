@@ -31,7 +31,7 @@ class PeerReviewController extends BaseController
             $boardDevelopers[$type->slug] = $board->getBoardDevelopers();
 
             /* Not too elegant way to calculate where to split the list into two columns */
-            $developerCount = $board->getDeveloperCount();
+            $developerCount = $board->getDeveloperCountAttribute();
             $split = round($developerCount/2, 0, PHP_ROUND_HALF_DOWN);
             $columnIndices[$type->slug] = [0 => $split, $split+1 => $developerCount];
         }

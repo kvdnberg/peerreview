@@ -89,6 +89,7 @@
                 <tr>
                     <th>#</th>
                     <th>{{ trans('messages.type') }}</th>
+                    <th>{{ trans('messages.developercount') }}</th>
                     <th>{{ trans('messages.current_from') }}</th>
                     <th>{{ trans('messages.current_to') }}/{{ trans('messages.current') }}</th>
                 </tr>
@@ -98,6 +99,7 @@
                 <tr>
                     <td>{{ board.id }}</td>
                     <td>{{ board.type.type }}</td>
+                    <td>{{ board.developerCount }}</td>
                     <td>{{ board.current_from }}</td>
                     <td>{% if board.current %}<i class="text-success glyphicon glyphicon-ok"></i>{% else %}{{ board.current_to }}{% endif %}</td>
                     <td></td>
