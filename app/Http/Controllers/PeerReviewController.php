@@ -88,9 +88,10 @@ class PeerReviewController extends BaseController
             $currentBoards = PeerReview::where('current', '=', true)->where('type_id', '=', $type->id)->get();
             foreach($currentBoards as $currentBoard) {
                 $currentBoard->current = false;
+                $currentBoard->current_to = new \DateTime();
                 $currentBoard->save();
             }
-
+            $peerReview->current_from = new \DateTime();
             $peerReview->type_id = $type->id;
             $peerReview->board = $boardString;
             $peerReview->current = true;

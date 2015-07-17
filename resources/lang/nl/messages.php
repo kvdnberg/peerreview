@@ -17,5 +17,10 @@ return [
     'save' => 'Opslaan',
     'peerreviewboard' => 'Peer Review Board',
     'confirmSave' => 'Weet je zeker dat je het PR board wilt opslaan?',
-    'confirmReset' => 'Weet je zeker dat je het PR board wilt resetten?'
+    'confirmReset' => 'Weet je zeker dat je het PR board wilt resetten?',
+    'oldBoards' => 'Oude PeerReview Boards',
+    'current' => 'Huidig',
+    'created_at' => 'Aangemaakt op',
+    'current_from' => 'Geldig sinds',
+    'current_to' => 'Geldig tot',
 ];
