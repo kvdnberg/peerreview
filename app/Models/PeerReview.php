@@ -31,7 +31,7 @@ class PeerReview extends Model
 
     }
 
-    public function getDeveloperCount()
+    public function getDeveloperCountAttribute()
     {
         $board = $this->board;
         $board = json_decode($board);
