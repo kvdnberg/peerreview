@@ -73,7 +73,7 @@ class DevelopersController extends Controller
      */
     public function show($id)
     {
-        //TODO? Not sure it's necessary 
+        //TODO? Not sure it's necessary
     }
 
     /**
