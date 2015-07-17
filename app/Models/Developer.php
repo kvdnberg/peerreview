@@ -24,7 +24,7 @@ class Developer extends Model
 
     public function getFullNameAttribute()
     {
-        return implode(' ', [$this->firstName, $this->middleName, $this->lastName]);
+        return implode(' ', array_filter([$this->firstName, $this->middleName, $this->lastName]));
     }
 
     public function getLevelsStringAttribute()
