@@ -54,7 +54,6 @@
                                 {% set columnDevelopers = attribute(typeDevelopers, column) %}
                                 <div class="col-md-6 col-xs-6" id="{{column}}Column">
                                     <h5 class="columnTitle_{{ loop.parent.loop.index }}">{{columnText}}</h5>
-
                                     {% for i in columnIndexStart..columnIndexEnd %}
                                         {% set developer = attribute(columnDevelopers, i) %}
                                         {% if developer %}
