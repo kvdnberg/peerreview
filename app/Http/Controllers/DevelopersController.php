@@ -73,7 +73,7 @@ class DevelopersController extends Controller
      */
     public function show($id)
     {
-        //
+        //TODO? Not sure it's necessary 
     }
 
     /**
@@ -128,6 +128,6 @@ class DevelopersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //TODO
     }
 }
