@@ -1,6 +1,6 @@
 <?php
 
-class FullNameTest extends TestCase {
+class DeveloperTest extends TestCase {
 
     /**
      * @param array $nameParts
