@@ -40,6 +40,7 @@
 
             });
             {% endfor %}
+
         });
     </script>
     <ul id="boardTabs" class="nav nav-tabs" role="tablist">
@@ -87,6 +88,7 @@
             <table class="table">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>#</th>
                     <th>{{ trans('messages.type') }}</th>
                     <th>{{ trans('messages.developercount') }}</th>
@@ -97,6 +99,7 @@
                 <tbody>
                 {% for board in oldBoards %}
                 <tr>
+                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#oldBoard_{{ board.id }}"><i class="fa fa-eye viewOldBoard" id="view_{{ board.id }}"></i></button></td>
                     <td>{{ board.id }}</td>
                     <td>{{ board.type.type }}</td>
                     <td>{{ board.developerCount }}</td>
@@ -107,6 +110,26 @@
                 {% endfor %}
                 </tbody>
             </table>
+
+            {% for board in oldBoards %}
+                <div class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="oldBoardLabel" id="oldBoard_{{ board.id }}">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="oldBoardLabel">Peer Review Board: {{ board.type.type }} ({{ board.current_from }} - {% if board.current %}<i class="text-success glyphicon glyphicon-ok"></i>{% else %}{{ board.current_to }}{% endif %})</h4>
+                            </div>
+                            <div class="modal-body">
+                                {% include 'PeerReview/peerreviewboard.twig' %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
             </div>
     </div>
 {% endblock %}

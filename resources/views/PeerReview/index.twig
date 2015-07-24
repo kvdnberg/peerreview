@@ -2,72 +2,19 @@
 
 {% block content %}
     <link rel="stylesheet" href="{{ elixir('css/pages/peerreviewboard.css') }}">
-    <script>
-        $(document).ready(function() {
-            $('#{{ types.0.slug}}-tab').tab('show');
-                hideNamesInSmallWindows();
-
-            $(window).resize(function () {
-                hideNamesInSmallWindows();
-            });
-        });
-
-        /**
-         * When the window size is smaller, hide some information (lastname, github icon) and adjust the styles
-         * to make things fit better. Combined with Bootstrap grid styles (col-md-6 + col-xs-12 etc.)
-         */
-        function hideNamesInSmallWindows()
-        {
-             var dth = $(window).width();
-            if($(window).width() < 988) {
-                $('.reviewBoardEntry').css('padding', '10px');
-                $('.reviewBoardEntry').css('margin-bottom', '5px');
-                $('.reviewBoardEntry h4.developerFullname').fadeOut();
-                $('.reviewBoardEntry h4.developerFirstname').fadeIn();
-                $('.columnTitle_2').fadeOut();
-                $('.fa-github-alt').fadeOut();
-            } else {
-                $('.reviewBoardEntry').css('padding', '19px');
-                $('.reviewBoardEntry').css('margin-bottom', '20px');
-                $('.reviewBoardEntry h4.developerFullname').fadeIn();
-                $('.reviewBoardEntry h4.developerFirstname').fadeOut();
-                $('.columnTitle_2').fadeIn();
-                $('.fa-github-alt').fadeIn();
-            }
-        }
-    </script>
     <h1>{{trans('messages.peerreviewboard')}}</h1>
     <ul id="boardTabs" class="nav nav-tabs" role="tablist">
-        {% for type in types %}
+        {% for board in boards %}
+            {% set type = board.type %}
             <li role="presentation"><a href="#{{type.slug}}" role="tab" id="{{type.slug}}-tab" data-toggle="tab" aria-controls="{{type.slug}}" aria-expanded="true">{{type.type}}</a></li>
         {% endfor %}
     </ul>
     <div id="boardTabContent" class="tab-content">
-        {% for type in types %}
-            {% set typeDevelopers = attribute(boardDevelopers, type.slug) %}
+        {% for board in boards %}
+            {% set type = board.type %}
             <div id="{{type.slug}}" role="tabpanel" class="tab-pane fade" aria-labelledby="{{type.slug}}-tab">
-                    {% for columnIndexStart, columnIndexEnd in attribute(columnIndices, type.slug) %}
-                        {% set columnSplit = (attribute(developerCount, type.slug)/2)|round %}
-
-                        <div class="col-md-6 col-xs-12 peerReviewBoard" id="{{type.slug}}_peerReviewBoard">
-                            {% for column, columnText in columns %}
-                                {% set columnDevelopers = attribute(typeDevelopers, column) %}
-                                <div class="col-md-6 col-xs-6" id="{{column}}Column">
-                                    <h5 class="columnTitle_{{ loop.parent.loop.index }}">{{columnText}}</h5>
-                                    {% for i in columnIndexStart..columnIndexEnd %}
-                                        {% set developer = attribute(columnDevelopers, i) %}
-                                        {% if developer %}
-                                            <div class="well reviewBoardEntry" draggable="true" ondragstart="drag(event)" id="{{type.slug}}_{{column}}_{{developer.id}}_developer">
-                                                <h4 class="developerFirstname">{{ developer.firstName }}</h4><h4 class="developerFullname">{{developer.fullName}}</h4>
-                                                <p><i class="fa fa-github-alt"></i> <a href="https://github.com/{{developer.gitHubHandle}}">&#64;{{developer.gitHubHandle}}</a></p>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endfor %}
-                </div>
+                {% include 'PeerReview/peerreviewboard.twig' %}
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
