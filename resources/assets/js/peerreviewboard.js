@@ -1,3 +1,34 @@
+$(document).ready(function() {
+    hideNamesInSmallWindows();
+
+    $(window).resize(function () {
+        hideNamesInSmallWindows();
+    });
+});
+
+/**
+ * When the window size is smaller, hide some information (lastname, github icon) and adjust the styles
+ * to make things fit better. Combined with Bootstrap grid styles (col-md-6 + col-xs-12 etc.)
+ */
+function hideNamesInSmallWindows()
+{
+    if($(window).width() < 988) {
+        $('.reviewBoardEntry').css('padding', '10px');
+        $('.reviewBoardEntry').css('margin-bottom', '5px');
+        $('.reviewBoardEntry h4.developerFullname').fadeOut();
+        $('.reviewBoardEntry h4.developerFirstname').fadeIn();
+        $('.columnTitle_2').fadeOut();
+        $('.fa-github-alt').fadeOut();
+    } else {
+        $('.reviewBoardEntry').css('padding', '19px');
+        $('.reviewBoardEntry').css('margin-bottom', '20px');
+        $('.reviewBoardEntry h4.developerFullname').fadeIn();
+        $('.reviewBoardEntry h4.developerFirstname').fadeOut();
+        $('.columnTitle_2').fadeIn();
+        $('.fa-github-alt').fadeIn();
+    }
+}
+
 /**
  * On page load, read local storage and load the board from there.
  * @param board - ID of the board and local storage key (i.e. frontend_peerReviewBoard)
