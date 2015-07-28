@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>{{trans('messages.add_developer')}}</h1>
-    {{  form_model(developer, {'route': 'showDevelopers'})|raw }}
+    {{  form_model(developer, {'route': 'developers.store'})|raw }}
 
     {{ include('PeerReview/Developers/form.twig') }}
 
