@@ -8,8 +8,13 @@
     <h1>{{trans('messages.peerreviewboard')}}</h1>
     <script>
         $(document).ready(function() {
-
             var localDataVars = [];
+            var oldBoards = {};
+
+            {% for board in oldBoards %}
+            oldBoards[{{ board.id }}] = {'type': '{{ board.type.slug }}', 'board': {{ board.board|json_encode|raw }} };
+            {% endfor %}
+
             {% for index, type in types %}
 
             var thisBoard = '{{type.slug}}_peerReviewBoard';
@@ -41,6 +46,11 @@
             });
             {% endfor %}
 
+            $('.loadOldBoard').on('click', function () {
+                var buttonId = $(this).attr('id');
+                var boardId = buttonId.replace('loadOldBoard_', '');
+                loadPeerReviewBoard(oldBoards[boardId])
+            });
         });
     </script>
     <ul id="boardTabs" class="nav nav-tabs" role="tablist">
@@ -120,7 +130,12 @@
                                 <h4 class="modal-title" id="oldBoardLabel">Peer Review Board: {{ board.type.type }} ({{ board.current_from }} - {% if board.current %}<i class="text-success glyphicon glyphicon-ok"></i>{% else %}{{ board.current_to }}{% endif %})</h4>
                             </div>
                             <div class="modal-body">
-                                {% include 'PeerReview/peerreviewboard.twig' %}
+                                <div class="container-fluid">
+                                <button type="button" id="loadOldBoard_{{ board.id }}" class="loadOldBoard pull-right" aria-label="Load"><span aria-hidden="true"><i class="fa fa-upload"></i></span></button>
+                                </div>
+                                <div class="container-fluid">
+                                    {% include 'PeerReview/peerreviewboard.twig' %}
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

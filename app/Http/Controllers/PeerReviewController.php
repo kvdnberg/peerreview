@@ -7,7 +7,7 @@ use App\Models\Developer;
 use App\Models\Type;
 use App\Models\PeerReview;
 use Illuminate\Routing\Controller as BaseController;
-
+use Illuminate\Support\Facades\Response;
 use App\Http\Requests;
 use Request;
 
@@ -85,6 +85,4 @@ class PeerReviewController extends BaseController
             $peerReview->save();
         }
     }
-
-
 }

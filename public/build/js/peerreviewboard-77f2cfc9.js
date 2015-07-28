@@ -205,3 +205,24 @@ function storePeerReviewBoard(type)
         }
     });
 }
+
+
+function loadPeerReviewBoard(board)
+{
+    var boardItems = JSON.parse(board['board']);
+    var type = board['type'];
+    var localData = {};
+    var boardKey = type + '_peerReviewBoard';
+   jQuery.each(boardItems, function(index, item) {
+       jQuery.each(item, function(column, id)
+       {
+           var dataIndex = type + '_' + column + '_' + index;
+           var developerId = type + '_' + column + '_' + id + '_developer';
+           localData[dataIndex] = developerId;
+       });
+
+   });
+    localStorage.setItem(boardKey, JSON.stringify(localData));
+    restoreLocalData(boardKey);
+
+}
