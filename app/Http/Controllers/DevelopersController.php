@@ -62,6 +62,8 @@ class DevelopersController extends Controller
         $skills = Request::input('skills');
         $developer->skills()->attach($skills);
 
+        $developer->save();
+
         return redirect('developers');
     }
 
