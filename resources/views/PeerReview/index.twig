@@ -10,8 +10,16 @@
         {% endfor %}
     </ul>
     <div id="boardTabContent" class="tab-content">
-        {% for board in boards %}
+        {% for index, board in boards %}
+
             {% set type = board.type %}
+            {% if(index==0) %}
+                <script>
+                    $(document).ready( function () {
+                        $('#{{type.slug}}-tab').tab('show');
+                    });
+                </script>
+            {% endif %}
             <div id="{{type.slug}}" role="tabpanel" class="tab-pane fade" aria-labelledby="{{type.slug}}-tab">
                 {% include 'PeerReview/peerreviewboard.twig' %}
             </div>
