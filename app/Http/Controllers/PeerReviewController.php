@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 use App\Http\Requests;
 use Request;
+use Auth;
 
 class PeerReviewController extends BaseController
 {
@@ -36,10 +37,9 @@ class PeerReviewController extends BaseController
             $columnIndices[$type->slug] = [0 => $split, $split+1 => $developerCount];
         }
 
-
         $columns = ['author' => 'Authors', 'reviewer' => 'Reviewers'];
 
-        return view('PeerReview.index', compact('boardDevelopers', 'developerCount', 'types', 'columns', 'columnIndices'));
+        return view('PeerReview.index', compact('boardDevelopers', 'developerCount', 'types', 'columns', 'columnIndices', 'isAdmin', 'adminMenu'));
     }
 
     /**
@@ -97,6 +97,11 @@ class PeerReviewController extends BaseController
 
             $peerReview->save();
         }
+    }
+
+    public function getAdminMenu()
+    {
+
     }
 
 
