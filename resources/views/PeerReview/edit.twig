@@ -49,7 +49,9 @@
             $('.loadOldBoard').on('click', function () {
                 var buttonId = $(this).attr('id');
                 var boardId = buttonId.replace('loadOldBoard_', '');
-                loadPeerReviewBoard(oldBoards[boardId])
+                var type = loadPeerReviewBoard(oldBoards[boardId]);
+                $('#oldBoard_' + boardId).modal('hide');
+                $('#' + type + '-tab').tab('show');
             });
         });
     </script>

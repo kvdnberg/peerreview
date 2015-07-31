@@ -224,5 +224,6 @@ function loadPeerReviewBoard(board)
    });
     localStorage.setItem(boardKey, JSON.stringify(localData));
     restoreLocalData(boardKey);
+    return type;
 
 }
