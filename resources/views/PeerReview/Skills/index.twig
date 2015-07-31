@@ -8,10 +8,13 @@
     <div class="col-md-4">
         <table class="table">
             <tr><th></th>
-                <th>{{ trans('messages.name') }}</th></tr>
+                <th>{{ trans('messages.name') }}</th>
+                <th>{{ trans('messages.developers') }}</th>
+            </tr>
             {% for skill in skills %}
                 <tr><td><a href="{{ url_route('skills.edit', {'id': skill.id}) }}" class="glyphicon glyphicon-edit" title="{{ trans('messages.edit') }}"></a></td>
                     <td>{{ skill.skill }}</td>
+                    <td>{{ skill.developers|length }}</td>
                 </tr>
             {% endfor %}
         </table>

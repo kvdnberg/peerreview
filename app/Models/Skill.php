@@ -9,6 +9,8 @@ class Skill extends Model
     protected $fillable = ['skill'];
     public function developers()
     {
-        return $this->hasMany('App\Models\Developer');
+        return $this->belongsToMany('App\Models\Developer');
     }
+
+
 }
