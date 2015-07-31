@@ -16,6 +16,7 @@ Route::get('/', 'PeerReviewController@index');
 Route::group(['middleware' => 'auth.basic'], function() {
     Route::get('edit/{id?}', ['uses' => 'PeerReviewController@edit']);
     Route::resource('developers', 'DevelopersController');
+    Route::resource('skills', 'SkillsController');
     Route::post('saveReviewBoard', ['uses' => 'PeerReviewController@store']);
     
 });
