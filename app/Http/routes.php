@@ -23,3 +23,5 @@ Route::get('developers/{sortby?}/{order?}', ['middleware' => 'auth.basic', 'as' 
 Route::post('saveReviewBoard', ['middleware' => 'auth.basic','uses' => 'PeerReviewController@store']);
 
 Route::get('gitHub', 'GitHubStatsController@index');
+
+Route::get('gitHubRepos', ['as' => 'gitHubRepos', 'uses' => 'GitHubStatsController@sortedRepositoriesCall']);
