@@ -7,7 +7,7 @@ use App\Models\Developer;
 use App\Models\Type;
 use App\Models\PeerReview;
 use Illuminate\Routing\Controller as BaseController;
-
+use Illuminate\Support\Facades\Response;
 use App\Http\Requests;
 use Request;
 
@@ -22,24 +22,10 @@ class PeerReviewController extends BaseController
     {
         $types = Type::all();
         $boards = PeerReview::where('current', '=', true)->get();
-        $boardDevelopers = [];
-        $columnIndices = [];
-
-        /** @var PeerReview $board */
-        foreach($boards as $board) {
-            $type = Type::find($board->type_id);
-            $boardDevelopers[$type->slug] = $board->getBoardDevelopers();
-
-            /* Not too elegant way to calculate where to split the list into two columns */
-            $developerCount = $board->getDeveloperCount();
-            $split = round($developerCount/2, 0, PHP_ROUND_HALF_DOWN);
-            $columnIndices[$type->slug] = [0 => $split, $split+1 => $developerCount];
-        }
-
 
         $columns = ['author' => 'Authors', 'reviewer' => 'Reviewers'];
 
-        return view('PeerReview.index', compact('boardDevelopers', 'developerCount', 'types', 'columns', 'columnIndices'));
+        return view('PeerReview.index', compact('boards', 'types', 'columns'));
     }
 
     /**
@@ -88,9 +74,10 @@ class PeerReviewController extends BaseController
             $currentBoards = PeerReview::where('current', '=', true)->where('type_id', '=', $type->id)->get();
             foreach($currentBoards as $currentBoard) {
                 $currentBoard->current = false;
+                $currentBoard->current_to = new \DateTime();
                 $currentBoard->save();
             }
-
+            $peerReview->current_from = new \DateTime();
             $peerReview->type_id = $type->id;
             $peerReview->board = $boardString;
             $peerReview->current = true;
@@ -98,6 +85,4 @@ class PeerReviewController extends BaseController
             $peerReview->save();
         }
     }
-
-
 }
