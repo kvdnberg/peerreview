@@ -1,0 +1,24 @@
+<div class="row">
+{% set boardDevelopers = board.boardDevelopers %}
+{% set columnIndices = board.columnIndices %}
+{% for columnIndexStart, columnIndexEnd in columnIndices %}
+        <div class="col-md-6 col-xs-12 peerReviewBoard" id="{{type.slug}}_peerReviewBoard">
+            {% for column, columnText in columns %}
+                {% set columnDevelopers = attribute(boardDevelopers, column) %}
+                <div class="col-md-6 col-xs-6" id="{{column}}Column">
+                    <h5 class="columnTitle_{{ loop.parent.loop.index }}">{{columnText}}</h5>
+                    {% for i in columnIndexStart..columnIndexEnd %}
+                        {% set developer = attribute(columnDevelopers, i) %}
+                        {% if developer %}
+                            <div class="well reviewBoardEntry" draggable="true" ondragstart="drag(event)" id="{{type.slug}}_{{column}}_{{developer.id}}_developer">
+                                <h4 class="developerFirstname">{{ developer.firstName }}</h4><h4 class="developerFullname">{{developer.fullName}}</h4>
+                                <p><i class="fa fa-github-alt"></i> <a href="https://github.com/{{developer.gitHubHandle}}">&#64;{{developer.gitHubHandle}}</a></p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+{% endfor %}
+</div>
+</div>

@@ -8,8 +8,13 @@
     <h1>{{trans('messages.peerreviewboard')}}</h1>
     <script>
         $(document).ready(function() {
-
             var localDataVars = [];
+            var oldBoards = {};
+
+            {% for board in oldBoards %}
+            oldBoards[{{ board.id }}] = {'type': '{{ board.type.slug }}', 'board': {{ board.board|json_encode|raw }} };
+            {% endfor %}
+
             {% for index, type in types %}
 
             var thisBoard = '{{type.slug}}_peerReviewBoard';
@@ -40,12 +45,21 @@
 
             });
             {% endfor %}
+
+            $('.loadOldBoard').on('click', function () {
+                var buttonId = $(this).attr('id');
+                var boardId = buttonId.replace('loadOldBoard_', '');
+                var type = loadPeerReviewBoard(oldBoards[boardId]);
+                $('#oldBoard_' + boardId).modal('hide');
+                $('#' + type + '-tab').tab('show');
+            });
         });
     </script>
     <ul id="boardTabs" class="nav nav-tabs" role="tablist">
         {% for type in types %}
             <li role="presentation"><a href="#{{type.slug}}" role="tab" id="{{type.slug}}-tab" data-toggle="tab" aria-controls="{{type.slug}}" aria-expanded="true">{{type.type}}</a></li>
         {% endfor %}
+        <li role="presentation"><a href="#oldBoards" role="tab" id="oldBoards-tab" data-toggle="tab" aria-controls="oldBoards" aria-expanded="true">{{ trans('messages.oldBoards') }}</a> </li>
     </ul>
     <div id="boardTabContent" class="tab-content">
         {% for type in types %}
@@ -81,5 +95,58 @@
                 </div>
             </div>
         {% endfor %}
+        <div id="oldBoards" role="tabpanel" class="tab-pane fade" aria-labelledby="oldBoards-tab">
+            <h3>{{ trans('messages.oldBoards') }}</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th>{{ trans('messages.type') }}</th>
+                    <th>{{ trans('messages.developercount') }}</th>
+                    <th>{{ trans('messages.current_from') }}</th>
+                    <th>{{ trans('messages.current_to') }}/{{ trans('messages.current') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for board in oldBoards %}
+                <tr>
+                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#oldBoard_{{ board.id }}"><i class="fa fa-eye viewOldBoard" id="view_{{ board.id }}"></i></button></td>
+                    <td>{{ board.id }}</td>
+                    <td>{{ board.type.type }}</td>
+                    <td>{{ board.developerCount }}</td>
+                    <td>{{ board.current_from }}</td>
+                    <td>{% if board.current %}<i class="text-success glyphicon glyphicon-ok"></i>{% else %}{{ board.current_to }}{% endif %}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {% for board in oldBoards %}
+                <div class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="oldBoardLabel" id="oldBoard_{{ board.id }}">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="oldBoardLabel">Peer Review Board: {{ board.type.type }} ({{ board.current_from }} - {% if board.current %}<i class="text-success glyphicon glyphicon-ok"></i>{% else %}{{ board.current_to }}{% endif %})</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                <button type="button" id="loadOldBoard_{{ board.id }}" class="loadOldBoard pull-right" aria-label="Load"><span aria-hidden="true"><i class="fa fa-upload"></i></span></button>
+                                </div>
+                                <div class="container-fluid">
+                                    {% include 'PeerReview/peerreviewboard.twig' %}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            </div>
     </div>
 {% endblock %}

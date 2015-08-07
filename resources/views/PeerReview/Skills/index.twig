@@ -1,0 +1,26 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+    <h1>{{ trans('messages.skills') }}</h1>
+
+{%  if(skills|length) %}
+    <div class="row">
+    <div class="col-md-4">
+        <table class="table">
+            <tr><th></th>
+                <th>{{ trans('messages.name') }}</th>
+                <th>{{ trans('messages.developers') }}</th>
+            </tr>
+            {% for skill in skills %}
+                <tr><td><a href="{{ url_route('skills.edit', {'id': skill.id}) }}" class="glyphicon glyphicon-edit" title="{{ trans('messages.edit') }}"></a></td>
+                    <td>{{ skill.skill }}</td>
+                    <td>{{ skill.developers|length }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </div>
+
+{% endif %}
+<a href="{{ url_route('skills.create') }}">{{ trans('messages.add_skill') }}</a>
+{% endblock %}

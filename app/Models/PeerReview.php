@@ -11,7 +11,7 @@ class PeerReview extends Model
         return $this->belongsTo('App\Models\Type');
     }
 
-    public function getBoardDevelopers()
+    public function getBoardDevelopersAttribute()
     {
         $boardDevelopers = [];
         $board = $this->board;
@@ -31,10 +31,22 @@ class PeerReview extends Model
 
     }
 
-    public function getDeveloperCount()
+    public function getDeveloperCountAttribute()
     {
         $board = $this->board;
         $board = json_decode($board);
         return count((array)$board);
     }
+
+    /** Not too elegant way to calculate where to split the list of developers into two columns
+     *
+     * @return array
+     */
+    public function getColumnIndicesAttribute()
+    {
+        $developerCount = $this->getDeveloperCountAttribute();
+        $split = round($developerCount/2, 0, PHP_ROUND_HALF_DOWN);
+        return [0 => $split, $split+1 => $developerCount];
+    }
+
 }

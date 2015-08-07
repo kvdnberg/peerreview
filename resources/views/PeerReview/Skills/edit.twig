@@ -1,0 +1,9 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+    <h1>{{trans('messages.edit_skill')}}</h1>
+    {{  form_model(skill, {'method' : 'PUT', 'route': ['skills.update', skill.id]})|raw  }}
+
+    {{ include('PeerReview/Skills/form.twig') }}
+
+{% endblock %}

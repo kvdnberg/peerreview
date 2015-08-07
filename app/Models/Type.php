@@ -11,8 +11,9 @@ class Type extends Model
         return $this->hasMany('App\Models\Developer');
     }
 
-    public function peerReview()
+    public function peerReviews()
     {
-        return $this->hasOne('App\Models\PeerReview');
+        return $this->hasMany('App\Models\PeerReview');
     }
+
 }
