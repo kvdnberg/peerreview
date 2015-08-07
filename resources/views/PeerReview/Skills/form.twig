@@ -1,0 +1,9 @@
+<div class="form-group">
+{{ form_label('skill', trans('messages.skill')) }}
+{{ form_text('skill', null, {'class': 'form-control'}) }}
+</div>
+<div class="form-group">
+{{ form_submit(trans('messages.save'), {'class': 'btn btn-primary form-control'}) }}
+</div>
+{{ form_close() }}
+<a href="{{ url_route('skills.index') }}">{{trans('messages.return')}}</a>
