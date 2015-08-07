@@ -21,10 +21,13 @@ return [
     'peerreviewboard' => 'Peer Review Board',
     'confirmSave' => 'Weet je zeker dat je het PR board wilt opslaan?',
     'confirmReset' => 'Weet je zeker dat je het PR board wilt resetten?',
+    'add' => 'Toevoegen',
+    'logout' => 'Uitloggen',
     'oldBoards' => 'Oude Peer Review Boards',
     'current' => 'Huidig',
     'created_at' => 'Aangemaakt op',
     'current_from' => 'Geldig sinds',
     'current_to' => 'Geldig tot',
     'developercount' => 'Aantal developers'
+
 ];
