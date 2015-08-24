@@ -40,9 +40,9 @@ class DevelopersController extends Controller
      */
     public function create()
     {
-        $types = Type::lists('type', 'id');
-        $levels = Level::lists('level', 'id');
-        $skills = Skill::lists('skill', 'id');
+        $types = Type::lists('type', 'id')->all();
+        $levels = Level::lists('level', 'id')->all();
+        $skills = Skill::lists('skill', 'id')->all();
         $developer = new Developer;
         return view('PeerReview.Developers.add', compact('types', 'levels', 'skills', 'developer'));
     }
@@ -86,9 +86,9 @@ class DevelopersController extends Controller
      */
     public function edit($id)
     {
-        $types = Type::lists('type', 'id');
-        $levels = Level::lists('level', 'id');
-        $skills = Skill::lists('skill', 'id');
+        $types = Type::lists('type', 'id')->all();
+        $levels = Level::lists('level', 'id')->all();
+        $skills = Skill::lists('skill', 'id')->all();
         $developer = Developer::find($id);
         return view('PeerReview.Developers.edit', compact('types', 'levels', 'skills', 'developer'));
     }

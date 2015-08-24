@@ -29,10 +29,10 @@ class Developer extends Model
 
     public function getLevelsStringAttribute()
     {
-        return implode('/', $this->levels()->lists('level'));
+        return implode('/', $this->levels()->lists('level')->all());
     }
     public function getSkillsStringAttribute()
     {
-        return implode(', ', $this->skills()->lists('skill'));
+        return implode(', ', $this->skills()->lists('skill')->all());
     }
 }
