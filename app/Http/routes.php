@@ -13,6 +13,7 @@
 
 Route::get('/', ['as' => 'peerreview.index', 'uses' => 'PeerReviewController@index']);
 
+
 Route::group(['middleware' => 'auth.basic'], function() {
     Route::get('edit/{id?}', ['as' => 'peerreview.edit', 'uses' => 'PeerReviewController@edit']);
     Route::resource('developers', 'DevelopersController');
@@ -20,3 +21,9 @@ Route::group(['middleware' => 'auth.basic'], function() {
     Route::post('saveReviewBoard', ['uses' => 'PeerReviewController@store']);
     
 });
+
+
+Route::get('gitHub', 'GitHubStatsController@index');
+
+Route::get('gitHubRepos', ['as' => 'gitHubRepos', 'uses' => 'GitHubStatsController@sortedRepositoriesCall']);
+

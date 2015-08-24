@@ -1,0 +1,12 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+    <h1>{{ trans('messages.githubHeader') }}</h1>
+
+    Open PRs: {{ stats.openPrCount }}<br />
+    Closed PRs today: {{ stats.closedPrCountToday }}<br />
+    Closed PRs this week: {{ stats.closedPrCountThisWeek }}<br />
+    Closed PRs last week: {{ stats.closedPrCountLastWeek }}<br />
+
+
+{% endblock %}
